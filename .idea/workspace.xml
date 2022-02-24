@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="992b0a8d-dff9-4333-a1f5-5054c3660cb2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.serverless/cloudformation-template-update-stack.json" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/cloudformation-template-update-stack.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.serverless/everymundo.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/everymundo.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.serverless/serverless-state.json" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/serverless-state.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverless.yml" beforeDir="false" afterPath="$PROJECT_DIR$/serverless.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +116,7 @@
       <option name="presentableId" value="Default" />
       <updated>1645370167352</updated>
       <workItem from="1645370169974" duration="30074000" />
-      <workItem from="1645574961063" duration="17926000" />
+      <workItem from="1645574961063" duration="18941000" />
     </task>
     <servers />
   </component>

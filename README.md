@@ -15,9 +15,13 @@ I used Pandas on this project because I really love how easy pandas DataFrames a
 
 <h3>Challenges and Future Features:</h3>
 
-Challenges I incurred were centered completely around the AWS Lambda implementation. Since I am choosing to use Pandas, and Pandas is not natively available for import on AWS, I needed to find a way to package the Pandas module and send it to AWS. I first attempted this through the serverless framework and eventually attempted just loading a zip file as an S3 object and tried attaching the layer to my lambda function via the AWS console. I was continuously met with an error stating Function code combined with layers exceeds the maximum allowed size and was unable to remedy this issue.
+Challenges I incurred were centered completely around the AWS Lambda Layer implementation. Since I am choosing to use Pandas, and Pandas is not natively available for import on AWS, I needed to find a way to package the Pandas module and send it to AWS. I first attempted this through the serverless framework and eventually attempted just loading a zip file as an S3 object and tried attaching the layer to my lambda function via the AWS console. I was continuously met with an error stating Function code combined with layers exceeds the maximum allowed size and was unable to remedy this issue.
 
-I would like to be able to set this lambda up properly with a pandas layer for future features so that I can send log statistic emails to users automatically when a new log file is loaded in it's S3 bucket.
+I was able to successfully get the lambda function to trigger when a new file was loaded to my S3 bucket as long as the lambda was not importing either the main.py file or the pandas module. I set the lambda_handler function to just print the contents of the files retrieved from the proper S3 buckets and confirmed its success by checking the CloudWatch logs.
+
+I would like to be able to set this lambda up properly with a pandas layer for future features and I also would like to complete the final exercise, returning filtered log events via an HTTP endpoint.
+
+Even though I ran out of time and didn't get the lambda functioning as requested I had a lot of fun with this exercise. I even learned some great things about lambda layers, writing bucket policies for S3 permissions, and using the serverless framework! 
 
 
 <h2>How to Use the Project:</h2>
