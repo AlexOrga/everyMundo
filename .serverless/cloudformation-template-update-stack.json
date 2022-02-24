@@ -71,10 +71,10 @@
         }
       }
     },
-    "HelloLogGroup": {
+    "NewloadLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/everymundo-dev-hello"
+        "LogGroupName": "/aws/lambda/everymundo-dev-newload"
       }
     },
     "IamRoleLambdaExecution": {
@@ -154,18 +154,18 @@
         }
       }
     },
-    "HelloLambdaFunction": {
+    "NewloadLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/everymundo/dev/1645472263572-2022-02-21T19:37:43.572Z/everymundo.zip"
+          "S3Key": "serverless/everymundo/dev/1645641374914-2022-02-23T18:36:14.914Z/everymundo.zip"
         },
-        "Handler": "handler.get_subscription_details",
+        "Handler": "handler.lambda_handler",
         "Runtime": "python3.9",
-        "FunctionName": "everymundo-dev-hello",
+        "FunctionName": "everymundo-dev-newload",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -173,116 +173,162 @@
             "IamRoleLambdaExecution",
             "Arn"
           ]
-        }
+        },
+        "Layers": [
+          "arn:aws:lambda:us-east-1:240758252060:layer:main_py:1"
+        ]
       },
       "DependsOn": [
-        "HelloLogGroup"
+        "NewloadLogGroup"
       ]
     },
-    "HelloLambdaVersionIaXZCeGolAnm4ikQGHvGhHdoAmdv5gCCVQOXSoXFog": {
+    "NewloadLambdaVersionnhsAI6a5200fIL2qth3v2oyQ9HrLuJYrVmGpEN86ZK4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "HelloLambdaFunction"
+          "Ref": "NewloadLambdaFunction"
         },
-        "CodeSha256": "hp3csckaW13tiqrZZebZY2+VtgzfoJ44a5vQnn9s5HY="
+        "CodeSha256": "7asW9HKXa2DREGZkSInRzw/PM1ShaM39oqwwPWhGLJI="
       }
     },
-    "HttpApi": {
-      "Type": "AWS::ApiGatewayV2::Api",
+    "NewloadCustomS31": {
+      "Type": "Custom::S3",
+      "Version": 1,
+      "DependsOn": [
+        "NewloadLambdaFunction",
+        "CustomDashresourceDashexistingDashs3LambdaFunction"
+      ],
       "Properties": {
-        "Name": "dev-everymundo",
-        "ProtocolType": "HTTP"
-      }
-    },
-    "HttpApiStage": {
-      "Type": "AWS::ApiGatewayV2::Stage",
-      "Properties": {
-        "ApiId": {
-          "Ref": "HttpApi"
-        },
-        "StageName": "$default",
-        "AutoDeploy": true,
-        "DefaultRouteSettings": {
-          "DetailedMetricsEnabled": false
-        }
-      }
-    },
-    "HelloLambdaPermissionHttpApi": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
+        "ServiceToken": {
           "Fn::GetAtt": [
-            "HelloLambdaFunction",
+            "CustomDashresourceDashexistingDashs3LambdaFunction",
             "Arn"
           ]
         },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:",
-              {
-                "Ref": "AWS::Partition"
-              },
-              ":execute-api:",
-              {
-                "Ref": "AWS::Region"
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":",
-              {
-                "Ref": "HttpApi"
-              },
-              "/*"
-            ]
-          ]
-        }
+        "FunctionName": "everymundo-dev-newload",
+        "BucketName": "test-lambda-bucket-for-every-mundo",
+        "BucketConfigs": [
+          {
+            "Event": "s3:ObjectCreated:*",
+            "Rules": []
+          }
+        ]
       }
     },
-    "HttpApiIntegrationHello": {
-      "Type": "AWS::ApiGatewayV2::Integration",
+    "IamRoleCustomResourcesLambdaExecution": {
+      "Type": "AWS::IAM::Role",
       "Properties": {
-        "ApiId": {
-          "Ref": "HttpApi"
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
         },
-        "IntegrationType": "AWS_PROXY",
-        "IntegrationUri": {
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "dev",
+                  "everymundo",
+                  "custom-resources-lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      ":",
+                      [
+                        "arn",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        "s3",
+                        "",
+                        "",
+                        "test-lambda-bucket-for-every-mundo"
+                      ]
+                    ]
+                  },
+                  "Action": [
+                    "s3:PutBucketNotification",
+                    "s3:GetBucketNotification"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      ":",
+                      [
+                        "arn",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        "lambda",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        {
+                          "Ref": "AWS::AccountId"
+                        },
+                        "function",
+                        "*"
+                      ]
+                    ]
+                  },
+                  "Action": [
+                    "lambda:AddPermission",
+                    "lambda:RemovePermission"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "CustomDashresourceDashexistingDashs3LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/everymundo/dev/1645641374914-2022-02-23T18:36:14.914Z/custom-resources.zip"
+        },
+        "FunctionName": "everymundo-dev-custom-resource-existing-s3",
+        "Handler": "s3/handler.handler",
+        "MemorySize": 1024,
+        "Runtime": "nodejs14.x",
+        "Timeout": 180,
+        "Role": {
           "Fn::GetAtt": [
-            "HelloLambdaFunction",
+            "IamRoleCustomResourcesLambdaExecution",
             "Arn"
-          ]
-        },
-        "PayloadFormatVersion": "2.0",
-        "TimeoutInMillis": 6500
-      }
-    },
-    "HttpApiRouteGetUsersCreate": {
-      "Type": "AWS::ApiGatewayV2::Route",
-      "Properties": {
-        "ApiId": {
-          "Ref": "HttpApi"
-        },
-        "RouteKey": "GET /users/create",
-        "Target": {
-          "Fn::Join": [
-            "/",
-            [
-              "integrations",
-              {
-                "Ref": "HttpApiIntegrationHello"
-              }
-            ]
           ]
         }
       },
-      "DependsOn": "HttpApiIntegrationHello"
+      "DependsOn": [
+        "IamRoleCustomResourcesLambdaExecution"
+      ]
     }
   },
   "Outputs": {
@@ -294,47 +340,13 @@
         "Name": "sls-everymundo-dev-ServerlessDeploymentBucketName"
       }
     },
-    "HelloLambdaFunctionQualifiedArn": {
+    "NewloadLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionIaXZCeGolAnm4ikQGHvGhHdoAmdv5gCCVQOXSoXFog"
+        "Ref": "NewloadLambdaVersionnhsAI6a5200fIL2qth3v2oyQ9HrLuJYrVmGpEN86ZK4"
       },
       "Export": {
-        "Name": "sls-everymundo-dev-HelloLambdaFunctionQualifiedArn"
-      }
-    },
-    "HttpApiId": {
-      "Description": "Id of the HTTP API",
-      "Value": {
-        "Ref": "HttpApi"
-      },
-      "Export": {
-        "Name": "sls-everymundo-dev-HttpApiId"
-      }
-    },
-    "HttpApiUrl": {
-      "Description": "URL of the HTTP API",
-      "Value": {
-        "Fn::Join": [
-          "",
-          [
-            "https://",
-            {
-              "Ref": "HttpApi"
-            },
-            ".execute-api.",
-            {
-              "Ref": "AWS::Region"
-            },
-            ".",
-            {
-              "Ref": "AWS::URLSuffix"
-            }
-          ]
-        ]
-      },
-      "Export": {
-        "Name": "sls-everymundo-dev-HttpApiUrl"
+        "Name": "sls-everymundo-dev-NewloadLambdaFunctionQualifiedArn"
       }
     }
   }
