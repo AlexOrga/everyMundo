@@ -1,15 +1,13 @@
-#/Users/alexanderorga/.pyenv/shims/python
 from argparse import ArgumentParser
 import re
 import pandas as pd
 
-def do_all(file_path, timestamp_filter, application_filter, category_filter, severity_filter):
+def execute_all(file_path, timestamp_filter, application_filter, category_filter, severity_filter):
     log_results = get_log_statistics_from_file_path(file_path)
-
     print_counts(log_results)
 
     filtered_results = filter_results(log_results, timestamp_filter, application_filter, category_filter, severity_filter)
-    print(filtered_results)
+    print(f'\nFiltered Results:\n{filtered_results}')
 
 
 #Exercise 1
@@ -35,7 +33,7 @@ def filter_results(log_results, timestamp_filter, application_filter, category_f
     if filtered_results.shape[0] != 0:
         return filtered_results.sort_values(by=["timestamp"]).reset_index(drop=True)
     else:
-        return 'No Results Matching Your Filters.'
+        return 'No Results'
 
 
 def get_log_statistics_from_file_path(file_path):
@@ -79,6 +77,4 @@ if __name__ == '__main__':
 
     args = arg_parser.parse_args()
 
-    do_all(args.file_path, args.timestamp_filter, args.application_filter, args.category_filter, args.severity_filter)
-
-
+    execute_all(args.file_path, args.timestamp_filter, args.application_filter, args.category_filter, args.severity_filter)
