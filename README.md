@@ -35,12 +35,16 @@ Even though I ran out of time and didn't get the lambda functioning as requested
 
 <h3>The first main use of this project:</h3>
   - Create a log file with the following format
-    - ```<TIMESTAMP> - <APPLICATION> - <CATEGORY>[SEVERITY]: MESSAGE```
-    - Ex. ```20211102T00:00 - APP - SUCCESS: No problem here.
-  20211102T00:01 - APP - INFO: Some info here.
-  20211102T00:02 - APP - ERROR [1]: Non-severe
-  error. 20211102T00:02 - APP - ERROR [5]: Severe
-  error.```
+    - ```
+      <TIMESTAMP> - <APPLICATION> - <CATEGORY>[SEVERITY]: MESSAGE
+      ```
+    - Ex. ```
+    20211102T00:00 - APP - SUCCESS: No problem here.
+    20211102T00:01 - APP - INFO: Some info here. 
+    20211102T00:02 - APP - ERROR [1]: Non-severe
+    error. 20211102T00:02 - APP - ERROR [5]: Severe
+    error.
+          ```
   - Call the main.py script from the terminal with the appropriate flags
     - Flags
       - -f (REQUIRED! Full path to the log file you intend to use)
