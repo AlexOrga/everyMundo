@@ -2,9 +2,10 @@
 
 <h3>There are 2 main uses for this project:</h3>
 
-Returning overall event counts and filterable log event statistics when passing in the log's file path. 
+- Returning overall event counts and filterable log event statistics when passing in the log's file path. 
 
-The ability to pull files from multiple AWS S3 buckets. A log file from one and a file containing user email and subscription information from the other. Filtering log events based on user subscription and then returning a list of objects with the users' email addresses and an email body containing only the log information they are subscribed to. These objects contain all the information needed for an "emailer" function to perform the actual delivery. 
+
+- The ability to pull files from multiple AWS S3 buckets. A log file from one and a file containing user email and subscription information from the other. Filtering log events based on user subscription and then returning a list of objects with the users' email addresses and an email body containing only the log information they are subscribed to. These objects contain all the information needed for an "emailer" function to perform the actual delivery. 
 
 <h3>Technologies used</h3>
 
