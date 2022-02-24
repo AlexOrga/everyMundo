@@ -35,16 +35,16 @@ Even though I ran out of time and didn't get the lambda functioning as requested
 
 <h3>The first main use of this project:</h3>
   - Create a log file with the following format
-
-    - ```<TIMESTAMP> - <APPLICATION> - <CATEGORY>[SEVERITY]: MESSAGE```
+  
+    - <TIMESTAMP> - <APPLICATION> - <CATEGORY>[SEVERITY]: MESSAGE
+  
+    - Ex. 
+          20211102T00:00 - APP - SUCCESS: No problem here.
+          20211102T00:01 - APP - INFO: Some info here. 
+          20211102T00:02 - APP - ERROR [1]: Non-severe
+          error. 20211102T00:02 - APP - ERROR [5]: Severe
+          error.
     
-    - Ex. ```
-    20211102T00:00 - APP - SUCCESS: No problem here.
-    20211102T00:01 - APP - INFO: Some info here. 
-    20211102T00:02 - APP - ERROR [1]: Non-severe
-    error. 20211102T00:02 - APP - ERROR [5]: Severe
-    error.
-          ```
   - Call the main.py script from the terminal with the appropriate flags
     - Flags
       - -f (REQUIRED! Full path to the log file you intend to use)
@@ -66,11 +66,13 @@ Even though I ran out of time and didn't get the lambda functioning as requested
       ```
 
 <h3>The second main use of this project:</h3>
-  - I'm assuming for the following steps that you already have an AWS account and it is configured so that you can access your account information from your local machine's terminal.
+I'm assuming for the following steps that you already have an AWS account and it is configured so that you can access your account information from your local machine's terminal.
+  
   - Create a separate file with lines of user subscription information with the following format.  
     - ```email - application - category```
     - Ex. ```<your_name>@example.com - APP - ERROR```
     - Note: For a single user with multiple application and/or category subscriptions, you must create a new line for each email-app-category relationship.
+  
   - Create an S3 bucket on AWS and upload this file as an object in the bucket
     - Add the bucket name to the variable named 'user_info_bucket' on line 45 of handler.py
     - Add the object name to the variable named 'user_info_key' on line 46 of handler.py
